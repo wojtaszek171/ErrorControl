@@ -1,25 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
-
-    <include
-        layout="@layout/app_bar_main"
+    android:layout_height="match_parent">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
 
-</android.support.v4.widget.DrawerLayout>
+        <Spinner
+            android:id="@+id/methodSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:minHeight="40dp" />
+
+        <Spinner
+            android:id="@+id/subMethodSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/methodSpinner"
+            android:minHeight="40dp" />
+
+        <EditText
+            android:id="@+id/inputBits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/subMethodSpinner"
+            android:layout_toStartOf="@+id/generate"
+            android:hint="wprowadź bity" />
+
+        <Button
+            android:id="@+id/generate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/inputBits"
+            android:layout_alignBottom="@+id/inputBits"
+            android:layout_alignParentEnd="true"
+            android:text="LOSUJ" />
+
+        <Button
+            android:id="@+id/codeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputBits"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:text="Koduj" />
+
+        <EditText
+            android:id="@+id/outputBits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/button"
+            android:layout_alignBottom="@+id/button"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/button"
+            android:hint="zakodowane" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/codeButton"
+            android:text="Zakłóć" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/outputBits"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:text="dekoduj" />
+
+        <EditText
+            android:id="@+id/outputDecodedBits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/button2"
+            android:hint="dekodowane" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_below="@+id/outputDecodedBits"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:text="PODSUMOWANIE OPERACJI"
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/detected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView"
+            android:layout_toStartOf="@+id/detected_text"
+            android:text="Ilość błędów wykrytych : " />
+
+        <TextView
+            android:id="@+id/not_detected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/detected"
+            android:layout_toStartOf="@+id/detected_text"
+            android:text="Ilość błędów niewykrytych : " />
+
+        <TextView
+            android:id="@+id/detected_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/textView"
+            android:gravity="center"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/not_detected_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/detected_text"
+            android:layout_toEndOf="@+id/detected"
+            android:gravity="center"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/not_detected"
+            android:layout_toStartOf="@+id/not_detected_text"
+            android:text="Naprawione bity :" />
+
+        <TextView
+            android:id="@+id/bits_fixed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/not_detected_text"
+            android:layout_toEndOf="@+id/not_detected"
+            android:gravity="center"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/bits_fixed"
+            android:layout_toStartOf="@+id/not_detected_text"
+            android:text="Przesłane bity :" />
+
+        <TextView
+            android:id="@+id/bits_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/textView9"
+            android:layout_toEndOf="@+id/not_detected"
+            android:gravity="center"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView5"
+            android:layout_toStartOf="@+id/bits_send"
+            android:text="Przesłane bity dodatkowe :" />
+
+        <TextView
+            android:id="@+id/redundant_bits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/bits_send"
+            android:layout_toEndOf="@+id/textView5"
+            android:gravity="center"
+            android:text="-" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+    </RelativeLayout>
+</ScrollView>

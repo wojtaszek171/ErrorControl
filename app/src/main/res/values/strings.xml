@@ -5,4 +5,16 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string-array name="methods_array">
+            <item>Bit parzystości</item>
+            <item>Kodowanie hamminga</item>
+            <item>CRC</item>
+    </string-array>
+    <string-array name="submethods_array">
+        <item>CRC16</item>
+        <item>CRC32</item>
+        <item>SDLC</item>
+        <item>SDLC REVERSE</item>
+    </string-array>
 </resources>
