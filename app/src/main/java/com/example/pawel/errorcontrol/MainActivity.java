@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 detectedBits.setText("");
                 bitsFixed.setText("");
                 notDetected.setText("");
+                outputBitsText.setText("");
                 switch (i){
                     case 0:
                         transmitter = parityTransmitter;
@@ -124,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 detectedBits.setText("");
                 bitsFixed.setText("");
                 notDetected.setText("");
+                outputBitsText.setText("");
+
                 switch (i){
                     case 0:
                         crcTransmitter.setKey(Crc.CRC16);
