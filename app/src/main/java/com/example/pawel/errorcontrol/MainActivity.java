@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
      TextView bitsFixed;
      TextView bitsSend;
     TextView redundant;
+    TextView correctedBits;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +76,19 @@ public class MainActivity extends AppCompatActivity {
         bitsSend = findViewById(R.id.bits_send);
         redundant = findViewById(R.id.redundant_bits);
         outputBitsText = findViewById(R.id.outputBitsText);
+        correctedBits = findViewById(R.id.corrected_bits);
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 outputBits.setText("");
+                correctedBits.setText("");
+                decodedBits.setText("");
+                bitsSend.setText("");
+                redundant.setText("");
+                detectedBits.setText("");
+                bitsFixed.setText("");
+                notDetected.setText("");
                 switch (i){
                     case 0:
                         transmitter = parityTransmitter;
@@ -108,6 +117,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 outputBits.setText("");
+                correctedBits.setText("");
+                decodedBits.setText("");
+                bitsSend.setText("");
+                redundant.setText("");
+                detectedBits.setText("");
+                bitsFixed.setText("");
+                notDetected.setText("");
                 switch (i){
                     case 0:
                         crcTransmitter.setKey(Crc.CRC16);
@@ -217,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
                 transmitter.setCode(outputBits.getText().toString());
                 int errors=countErrors();
                 transmitter.fix();
-                //correctedData.setText(transmitter[0].codeToString());
+                correctedBits.setText(transmitter.codeToString());
                 //colorFixedBits(transmitter[0].getBitTypes());
                 transmitter.decode();
                 decodedBits.setText(transmitter.dataToString());
@@ -232,8 +248,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private int countErrors()
     {
-        String input = inputBits.getText().toString();
-        String output = decodedBits.getText().toString();
+        String input = outputBitsText.getText().toString();
+        String output = outputBits.getText().toString();
         if (input.length()!=output.length()) return -1;
         else
         {
