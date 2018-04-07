@@ -28,6 +28,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Parity parityTransmitter = new Parity();
+        final Hamming hammingTransmitter = new Hamming();
+        Crc crcTransmitter = new Crc();
+        //Crc32 crc32Transmitter = new Crc32();
+        Parity parityReceiver = new Parity();
+        Hamming hammingReceiver = new Hamming();
+        Crc crcReceiver = new Crc();
+        final DataBits dataBits = new DataBits();
+        final CodeBase transmitter=parityTransmitter;
+        CodeBase receiver=parityReceiver;
+
         Spinner dropdown = findViewById(R.id.methodSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.methods_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -39,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button generate = findViewById(R.id.generate);
         Button disrupt = findViewById(R.id.disrupt);
+        Button encode = findViewById(R.id.codeButton);
         final TextView outputBits = findViewById(R.id.outputBits);
         final TextView inputBits = findViewById(R.id.inputBits);
         generate.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
                 okButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        inputBits.setText(String.valueOf((picker.getValue()+1)*8));
+                        dataBits.generate((picker.getValue()+1)*8);
+                        inputBits.setText(dataBits.toString());
                         dialog.dismiss();
                     }
                 });
@@ -90,6 +102,31 @@ public class MainActivity extends AppCompatActivity {
                 });
                 dialog.show();
 
+            }
+        });
+        encode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String str = inputBits.getText().toString();
+                if (str.length()==0)
+                {
+                    str = "00000000";
+                    inputBits.setText(str);
+                }
+                else if (str.length()%8!=0)
+                {
+                    String temp = "";
+                    int zeros = 8-str.length()%8;
+                    for (int i=0; i<zeros; i++) temp+="0";
+                    str = temp + str;
+                    inputBits.setText(str);
+                }
+
+                transmitter.setData(str);
+                transmitter.encode();
+                outputBits.setText(transmitter.codeToString());
+                transmitter.setCode(transmitter.codeToString());
+                //receivedData.setText(transmitter.codeToString());
             }
         });
     }
