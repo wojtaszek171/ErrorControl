@@ -56,14 +56,14 @@
             android:id="@+id/outputBits"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/button"
-            android:layout_alignBottom="@+id/button"
+            android:layout_alignBaseline="@+id/disrupt"
+            android:layout_alignBottom="@+id/disrupt"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/button"
+            android:layout_toStartOf="@+id/disrupt"
             android:hint="zakodowane" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/disrupt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -161,8 +161,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/bits_fixed"
-            android:layout_toStartOf="@+id/not_detected_text"
+            android:layout_below="@+id/textView9"
+            android:layout_toStartOf="@+id/bits_fixed"
             android:text="Przesłane bity :" />
 
         <TextView
