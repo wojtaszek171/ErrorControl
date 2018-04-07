@@ -7,7 +7,7 @@
         android:id="@+id/numberPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/dialog_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp" />
 
@@ -17,15 +17,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/numberPicker"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
         android:layout_marginTop="14dp"
         android:text="OK" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/dialog_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:text="Ilość bitów:" />
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:text="Liczba bitów do zakłócenia:"
+        android:textSize="20sp" />
 </RelativeLayout>
