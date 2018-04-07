@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        inputBits.setText(String.valueOf(picker.getValue()*8));
+                        inputBits.setText(String.valueOf((picker.getValue()+1)*8));
                         dialog.dismiss();
                     }
                 });
