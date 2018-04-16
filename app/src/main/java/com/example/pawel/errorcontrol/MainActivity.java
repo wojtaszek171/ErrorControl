@@ -2,27 +2,15 @@ package com.example.pawel.errorcontrol;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -213,6 +201,9 @@ public class MainActivity extends AppCompatActivity {
                     str = "00000000";
                     inputBits.setText(str);
                 }
+
+
+                /*  bity do zakodowania powinny miec dlugosc 8*n bitow tylko dla Bitu parzystosci
                 else if (str.length()%8!=0)
                 {
                     String temp = "";
@@ -221,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
                     str = temp + str;
                     inputBits.setText(str);
                 }
+                */
 
                 transmitter.setData(str);
                 transmitter.encode();

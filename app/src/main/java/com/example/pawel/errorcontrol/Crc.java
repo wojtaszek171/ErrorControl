@@ -12,7 +12,9 @@ public class Crc extends CodeBase
 	
 	protected long key=0x18005;	// domyślnie CRC-16
 	protected int keyLength=16;	// domyślnie klucz 16 bitowy (dla CRC-16)
-	
+
+
+	// ustawia klucz
 	public void setKey(long klucz)
 	{
 		this.key=klucz;
@@ -25,8 +27,10 @@ public class Crc extends CodeBase
 	
 	private int xor(int a, int b)
 	{
-		if (a==b) return 0;
-		else return 1;
+		if (a==b)
+			return 0;
+		else
+			return 1;
 	}
 	
 	private int[] countCrc(int bity[])
@@ -35,41 +39,48 @@ public class Crc extends CodeBase
 		int crc[] = new int[keyLength];
 		int temp[] = new int[n+keyLength];
 		System.arraycopy(bity, 0, temp, keyLength, n);		// kopiowanie danych (z przesunięciem o 16 bitów)
-		int tklucz[] = new int[keyLength+1];			// klucz jako tablica bitów
-		for (int i=0; i<keyLength+1; i++)
+		int tklucz[] = new int[keyLength+1];						// klucz jako tablica bitów
+
+		for (int i=0; i < keyLength + 1; i++)
 		{
-			if ((key&(1<<i))==0) tklucz[i]=0;
-			else tklucz[i]=1;
+			if ((key&(1<<i)) == 0)
+				tklucz[i] = 0;
+			else
+				tklucz[i] = 1;
 		}
 		
 		// liczenie CRC
-		for (int start=n+keyLength-1; start>keyLength-1; start--)
+		for (int start = n + keyLength - 1; start > keyLength - 1; start--)
 		{
-			if (temp[start]==1)
+			if (temp[start] == 1)
 			{
-				for (int i=0; i<keyLength+1; i++)
+				for (int i = 0; i < keyLength + 1; i++)
 				{
-					temp[start-i]=xor(temp[start-i], tklucz[keyLength-i]);
+					temp[start-i] = xor(temp[start-i], tklucz[keyLength-i]);
 				}
 			}
 		}
 		
 		System.arraycopy(temp, 0, crc, 0, keyLength);		
+
 		return crc;
 	}
 	
 	@Override
 	int[] encode()
 	{
-		int n = data.length;
-		int l = n+keyLength;
+		int n = data.length;                                    // dlugosc slowa danych
+		int l = n + keyLength;									// dlugosc zakodowanego slowa
 		code = new int[l];
 		type = new int[l];
 		System.arraycopy(data, 0, code, keyLength, n);		// kopiowanie danych (z przesunięciem o 16 bitów)
 		int [] crc = countCrc(data);
 		System.arraycopy(crc, 0, code, 0, keyLength);
-		for (int i=0; i<keyLength; i++) type[i] = 3;
-		for (int i=keyLength; i<l; i++) type[i] = 0;
+
+		for (int i = 0; i < keyLength; i++)
+			type[i] = 3;
+		for (int i = keyLength; i < l; i++)
+			type[i] = 0;
 		
 		return code;
 	}
@@ -77,10 +88,13 @@ public class Crc extends CodeBase
 	@Override
 	int[] decode()
 	{
-		int l = code.length;
-		int n = l-keyLength;
+		int l = code.length;					// dlugosc zakodowanego slowa
+		int n = l - keyLength;					// dlugosc zdekodowanego slowa
 		data = new int[n];
-		for (int i=0; i<n; i++) data[i] = code[i+keyLength];
+
+		// dekoduj
+		for (int i = 0; i < n; i++)
+			data[i] = code[i+keyLength];
 		
 		return data;
 	}
@@ -88,23 +102,32 @@ public class Crc extends CodeBase
 	@Override
 	void fix()
 	{
-		int l = code.length;
-		//int n = l-dlugosc;
-		//if (dane==null | dane.length!=kod.length-dlugosc) dane = new int[n];
+		int l = code.length;						// dlugosc naprawionego slowa
 		type = new int[l];
 		int crc[] = countCrc(code);
-		boolean ok = true;
-		for (int i=0; i<keyLength && ok; i++) if (crc[i]!=0) ok = false;
+		boolean ok = true;							// okresla poprawnosc danych
+
+		// sprawdz poprawnosc danych
+		for (int i = 0; i < keyLength && ok; i++)
+			if (crc[i] != 0)
+				ok = false;
+
+		// napraw uszkodzone dane
 		if (ok)
 		{
-			for (int i=0; i<keyLength; i++) type[i] = 3;
-			for (int i=keyLength; i<l; i++) type[i] = 0;
+			for (int i = 0; i < keyLength; i++)
+				type[i] = 3;
+			for (int i = keyLength; i<l; i++)
+				type[i] = 0;
 		}
 		else
 		{
-			errors++;
-			for (int i=0; i<keyLength; i++) type[i] = 5;
-			for (int i=keyLength; i<l; i++) type[i] = 2;
+			errors++;			// inkrementuj liczbe bledow
+
+			for (int i = 0; i < keyLength; i++)
+				type[i] = 5;
+			for (int i = keyLength; i<l; i++)
+				type[i] = 2;
 		}
 	}	
 }
