@@ -1,7 +1,9 @@
 package com.example.pawel.errorcontrol;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.AdapterView;
@@ -196,14 +198,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String str = inputBits.getText().toString();
-                if (str.length()==0)
-                {
+                if (str.length() == 0) {
                     str = "00000000";
                     inputBits.setText(str);
+                }else if(transmitter!=parityTransmitter){
+                    inputBits.setText(str);
                 }
-
-
-                /*  bity do zakodowania powinny miec dlugosc 8*n bitow tylko dla Bitu parzystosci
                 else if (str.length()%8!=0)
                 {
                     String temp = "";
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                     str = temp + str;
                     inputBits.setText(str);
                 }
-                */
+                
 
                 transmitter.setData(str);
                 transmitter.encode();
@@ -229,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
                 int errors=countErrors();
                 transmitter.fix();
                 correctedBits.setText(transmitter.codeToString());
-                //colorFixedBits(transmitter[0].getBitTypes());
                 transmitter.decode();
                 decodedBits.setText(transmitter.dataToString());
                 bitsSend.setText(Integer.toString(transmitter.getDataBitsNumber()));
@@ -237,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
                 int detected = transmitter.getDetectedErrorsNumber();
                 detectedBits.setText(Integer.toString(detected));
                 bitsFixed.setText(Integer.toString(transmitter.getFixedErrorsNumber()));
+                colorFixedBits(transmitter.getBitTypes());
                 notDetected.setText(Integer.toString(errors-detected));
             }
         });
@@ -258,32 +258,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    public void colorFixedBits(int type[])
-//    {
-//        String str=correctedData.getText();
-//        if (str.length()==type.length)
-//        {
-//            StyledDocument doc = correctedData.getStyledDocument();
-//            Style style = correctedData.addStyle("colours", null);
-//
-//            correctedData.setText("");
-//            int l = type.length;
-//            for (int i=0; i<l; i++)
-//            {
-//                Color colour=Color.black;
-//                switch (type[i])
-//                {
-//                    case 0: colour=Color.green; break;
-//                    case 1: colour=Color.red; break;
-//                    case 2: colour=Color.orange; break;
-//                    case 3: colour=Color.cyan; break;
-//                    case 4: colour=Color.magenta; break;
-//                    case 5: colour=Color.yellow; break;
-//                }
-//                StyleConstants.setForeground(style, colour);
-//                try { doc.insertString(doc.getLength(), ""+str.charAt(i), style); }
-//                catch (BadLocationException e){}
-//            }
-//        }
-//    }
+    public void colorFixedBits(int type[])
+    {
+        String colored = "";
+        String str=correctedBits.getText().toString();
+        if (str.length()==type.length)
+        {
+
+
+            correctedBits.setText("");
+            int l = type.length;
+            for (int i=0; i<l; i++)
+            {
+                String color="#000000";
+                switch (type[i])
+                {
+                    case 0: color="#10930b"; break;
+                    case 1: color="#920b0b"; break;
+                    case 2: color="#db7f00"; break;
+                    case 3: color="#00FFFF"; break;
+                    case 4: color="#FF00FF"; break;
+                    case 5: color="#f2ff00"; break;
+                }
+                colored += "<font color='"+ color +"'>"+str.charAt(i)+"</font>";
+            }
+            correctedBits.setText(Html.fromHtml(colored));
+        }
+    }
 }
